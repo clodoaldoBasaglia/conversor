@@ -1,0 +1,1 @@
+printa:System.out.println();$$se:if$$inteiro:int$$booleano:boolean$$decimal:double$$senão:else$$
