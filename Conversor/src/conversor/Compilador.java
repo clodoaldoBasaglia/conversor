@@ -23,7 +23,7 @@ public class Compilador {
     public void run(String arquivo) throws IOException, InterruptedException {
         File arq = new File(arquivo);
         System.out.println(arq.isFile());
-        String comando = "python "+arq;
+        String comando = "javac "+arq;
         Process processo = Runtime.getRuntime().exec(comando);
         BufferedReader reader
                 = new BufferedReader(new InputStreamReader(processo.getInputStream()));

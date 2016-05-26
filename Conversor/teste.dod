@@ -1,0 +1,10 @@
+programa teste;
+variavies:
+	int i;
+	int b;
+inicio
+	i = 1;
+	b = 2;
+	mostra(i);
+	mostra(b);
+fim.

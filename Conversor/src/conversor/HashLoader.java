@@ -27,18 +27,21 @@ public class HashLoader {
     }
 
     public HashMap<String, String> hashCreator() {
-        linguagem.put("printa", "System.out.println(" + ");");
+        linguagem.put("mostra", "System.out.println(" + ");");
         linguagem.put("inteiro", "int");
         linguagem.put("decimal", "double");
         linguagem.put("booleano", "boolean");
         linguagem.put("se", "if");
         linguagem.put("senão", "else");
+        linguagem.put("programa", "public class ");
+        linguagem.put("inicio", "{");
+        linguagem.put("fim.", "}");
         File palavras = new File("linguagem.txt");
         String info = "";
         for (Map.Entry<String, String> entry : linguagem.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            String mapa = key +":"+ value + "$$";
+            String mapa = key + ":" + value + "$$";
             info += mapa;
         }
 
