@@ -1,1 +1,1 @@
-booleano:boolean$$program:public class $$senão:else$$se:if$$inteiro:int$$decimal:double$$printa:System.out.println();$$
+programa:public class $$booleano:boolean$$inicio:{$$mostra:System.out.println();$$senão:else$$se:if$$inteiro:int$$decimal:double$$fim.:}$$

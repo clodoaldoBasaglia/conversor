@@ -5,6 +5,10 @@
  */
 package conversor;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 
 /**
@@ -27,8 +31,19 @@ public class Controller {
 
     private String transformeToJava(String conteudo) {
         System.out.println(conteudo);
-        
-        
+
+        return conteudo;
+    }
+
+    String abreArquivo(String caminho) throws FileNotFoundException, IOException {
+        System.out.println(caminho);
+        File arq = new File(caminho);
+        String texto;
+        String conteudo="";
+        BufferedReader br = new BufferedReader(new FileReader(arq));
+        while ((texto = br.readLine()) != null) {
+            conteudo+=texto+"\n";
+        }
         return conteudo;
     }
 

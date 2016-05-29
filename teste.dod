@@ -1,0 +1,10 @@
+programa dodo;
+variavies	
+inicio
+	inteiro a;
+	inteiro b;
+fim;
+inicio
+	a = a + b;
+	mostra(a);
+fim.
