@@ -219,7 +219,11 @@ public class jFrameTela extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        verificaCodigo();
+        try {
+            verificaCodigo();
+        } catch (IOException ex) {
+            Logger.getLogger(jFrameTela.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -311,8 +315,8 @@ public class jFrameTela extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void verificaCodigo() {
-
+    private void verificaCodigo() throws IOException {
+        cp.compila(arquivo);
     }
 
     private void executa() throws IOException, InterruptedException {
@@ -328,7 +332,7 @@ public class jFrameTela extends javax.swing.JFrame {
         int retornoValor = jFileChooser1.showDialog(this, "Abrir");
         jFileChooser1.setDialogTitle("Escolha seu arquivo");
         String caminho;
-        String conteudo="";
+        String conteudo = "";
         if (retornoValor == jFileChooser1.APPROVE_OPTION) {
             System.out.println(jFileChooser1.getSelectedFile());
             caminho = jFileChooser1.getSelectedFile().toString();

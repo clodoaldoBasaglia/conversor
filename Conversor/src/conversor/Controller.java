@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  *
@@ -29,9 +30,16 @@ public class Controller {
         System.out.println(fu.SalvaArquivo(caminho, conteudo));
     }
 
-    private String transformeToJava(String conteudo) {
+    public String transformeToJava(String conteudo) {
         System.out.println(conteudo);
-
+        HashLoader hl = new HashLoader();
+        HashMap<String, String> hashCreator = hl.hashCreator();
+        String linhaIdentificadora = conteudo.substring(0, conteudo.indexOf(";"));
+        String[] identificacao = linhaIdentificadora.split(" ");
+        identificacao[0] = identificacao[0].trim();
+        System.out.println(hashCreator.size());
+//        String cabecalho = (String) hashCreator.
+//        System.out.println(cabecalho + identificacao[1]);
         return conteudo;
     }
 
@@ -39,10 +47,10 @@ public class Controller {
         System.out.println(caminho);
         File arq = new File(caminho);
         String texto;
-        String conteudo="";
+        String conteudo = "";
         BufferedReader br = new BufferedReader(new FileReader(arq));
         while ((texto = br.readLine()) != null) {
-            conteudo+=texto+"\n";
+            conteudo += texto + "\n";
         }
         return conteudo;
     }

@@ -16,14 +16,12 @@ import java.io.InputStreamReader;
  */
 public class Compilador {
 
-    public void compila() {
-
-    }
+    Controller ct = new Controller();
 
     public void run(String arquivo) throws IOException, InterruptedException {
         File arq = new File(arquivo);
         System.out.println(arq.isFile());
-        String comando = "javac "+arq;
+        String comando = "javac " + arq;
         Process processo = Runtime.getRuntime().exec(comando);
         BufferedReader reader
                 = new BufferedReader(new InputStreamReader(processo.getInputStream()));
@@ -37,5 +35,18 @@ public class Compilador {
     }
 
     public void compilaAndRun() {
+    }
+
+    void compila(String arquivo) throws IOException {
+        File arq = new File(arquivo);
+        if (arq.isFile()) {
+            String conteudo = ct.abreArquivo(arquivo);
+            String transformeToJava = ct.transformeToJava(conteudo);
+
+        } else {
+            System.out.println("Selecione um arquivo.");
+        }
+        System.out.println(arq.isFile());
+
     }
 }

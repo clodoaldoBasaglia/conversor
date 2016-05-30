@@ -53,5 +53,9 @@ public class HashLoader {
         }
         return null;
     }
+    
+    public HashMap<String, String> loadHash(){
+        return null;
+    }
 
 }
