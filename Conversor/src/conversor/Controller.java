@@ -23,28 +23,27 @@ public class Controller {
     }
 
     void salva(String caminho, String conteudo) throws IOException {
-        System.out.println(conteudo);
-        System.out.println(caminho);
+//        System.out.println(conteudo);
+//        System.out.println(caminho);
         String codeInJava = transformeToJava(conteudo);
         FileUtils fu = new FileUtils();
-        System.out.println(fu.SalvaArquivo(caminho, conteudo));
+//        System.out.println(fu.SalvaArquivo(caminho, conteudo));
     }
 
-    public String transformeToJava(String conteudo) {
-        System.out.println(conteudo);
+    public String transformeToJava(String conteudo) throws IOException {
+//        System.out.println(conteudo);
         HashLoader hl = new HashLoader();
-        HashMap<String, String> hashCreator = hl.hashCreator();
+        HashMap<String, String> hashCreator = hl.loadHash();
         String linhaIdentificadora = conteudo.substring(0, conteudo.indexOf(";"));
         String[] identificacao = linhaIdentificadora.split(" ");
         identificacao[0] = identificacao[0].trim();
-        System.out.println(hashCreator.size());
 //        String cabecalho = (String) hashCreator.
 //        System.out.println(cabecalho + identificacao[1]);
         return conteudo;
     }
 
     String abreArquivo(String caminho) throws FileNotFoundException, IOException {
-        System.out.println(caminho);
+//        System.out.println(caminho);
         File arq = new File(caminho);
         String texto;
         String conteudo = "";

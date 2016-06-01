@@ -5,9 +5,11 @@
  */
 package conversor;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -27,6 +29,15 @@ public class FileUtils {
             return false;
         }
     }
-    
+
+    public String abrirArquivoHash(String caminho) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(caminho));
+        String texto = "";
+        String conteudo = "";
+        while ((texto = br.readLine()) != null) {
+            conteudo += texto + "\n";
+        }
+        return conteudo;
+    }
 
 }

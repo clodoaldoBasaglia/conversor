@@ -18,7 +18,7 @@ public class Conversor {
      */
     public static void main(String[] args) {
         HashLoader hl = new HashLoader();
-        HashMap<String, String> hashCreator = hl.hashCreator();
+        hl.hashCreator();
 //        new SplashScreen().setVisible(true);
         new jFrameTela().setVisible(true);
     }

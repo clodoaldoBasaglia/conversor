@@ -27,23 +27,24 @@ public class HashLoader {
     }
 
     public HashMap<String, String> hashCreator() {
-        linguagem.put("mostra", "System.out.println(" + ");");
-        linguagem.put("inteiro", "int");
-        linguagem.put("decimal", "double");
-        linguagem.put("booleano", "boolean");
-        linguagem.put("se", "if");
-        linguagem.put("senão", "else");
-        linguagem.put("programa", "public class ");
-        linguagem.put("inicio", "{");
-        linguagem.put("fim.", "}");
-        File palavras = new File("linguagem.txt");
+        linguagem.put("teste","ola");
+        linguagem.put("mostra", "System.out.println(;");
+        linguagem.put("inteiro", "int;");
+        linguagem.put("decimal", "double;");
+        linguagem.put("booleano", "boolean;");
+        linguagem.put("se", "if;");
+        linguagem.put("senao", "else;");
+        linguagem.put("programa", "public class;");
+        linguagem.put("inicio", "{;");
+        linguagem.put("fim", "};");
         String info = "";
         for (Map.Entry<String, String> entry : linguagem.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            String mapa = key + ":" + value + "$$";
+            String mapa = key + "~" + value;
             info += mapa;
         }
+        info = info.trim();
 
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("linguagem.txt"), "utf-8"))) {
@@ -53,9 +54,25 @@ public class HashLoader {
         }
         return null;
     }
-    
-    public HashMap<String, String> loadHash(){
-        return null;
+
+    public HashMap<String, String> loadHash() throws IOException {
+        FileUtils fu = new FileUtils();
+        String conteudoDaHash = fu.abrirArquivoHash("linguagem.txt");
+        linguagem.clear();
+        if(linguagem.isEmpty()){
+            System.out.println("sim");
+        } else {
+            System.out.println("não");
+        }
+        String[] splitLinhas = conteudoDaHash.split(";");
+        String[] traducao;
+        System.out.println(splitLinhas.length);
+        for (int i = 0; i < splitLinhas.length; i++) {
+            traducao = splitLinhas[i].split("~");
+            System.out.println(traducao.length + " " + traducao[0]);
+//            linguagem.put(traducao[0], traducao[1]);
+        }
+        return linguagem;
     }
 
 }

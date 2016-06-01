@@ -20,7 +20,7 @@ public class Compilador {
 
     public void run(String arquivo) throws IOException, InterruptedException {
         File arq = new File(arquivo);
-        System.out.println(arq.isFile());
+//        System.out.println(arq.isFile());
         String comando = "javac " + arq;
         Process processo = Runtime.getRuntime().exec(comando);
         BufferedReader reader
@@ -46,7 +46,7 @@ public class Compilador {
         } else {
             System.out.println("Selecione um arquivo.");
         }
-        System.out.println(arq.isFile());
+//        System.out.println(arq.isFile());
 
     }
 }
