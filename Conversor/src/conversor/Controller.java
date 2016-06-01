@@ -36,15 +36,17 @@ public class Controller {
         HashMap<String, String> hashLoaded = hl.loadHash();
         System.out.println("tamanho da hash carregada " + hashLoaded.size());
         String linhaIdentificadora = conteudo.substring(0, conteudo.indexOf(";"));
-        
+
         String[] identificacao = linhaIdentificadora.split(" ");
         identificacao[0] = identificacao[0].trim();
         String corpo = "";
-        String variaveis = "";
+
         String cabecalho = hashLoaded.get(identificacao[0]) + " " + identificacao[1] + "{";
-        corpo = cabecalho + "\n " + "public static void main(String[] args) {" + "\n";
-        variaveis = achaVariaveis(conteudo,linhaIdentificadora.length()+1);
-        System.out.println(corpo);
+        corpo = cabecalho + "\n " + "public static void main(String[] args) " + "\n";
+        int variaveis = achaVariaveis(conteudo, linhaIdentificadora.length() + 1);
+        corpo+="{";
+        String linhaVar = conteudo.substring(variaveis,conteudo.indexOf(";"));
+        System.out.println(linhaVar);
         return conteudo;
     }
 
@@ -60,16 +62,19 @@ public class Controller {
         return conteudo;
     }
 
-    private String achaVariaveis(String conteudo, int length) {
+    private int achaVariaveis(String conteudo, int length) {
         int valor = length;
         System.out.println(conteudo.charAt(valor));
-        while(conteudo.charAt(valor)=='\n' || conteudo.charAt(valor)==' '){
+        while (conteudo.charAt(valor) == '\n' || conteudo.charAt(valor) == ' ') {
             valor++;
         }
-        System.out.println(conteudo.charAt(valor++));
+        valor = valor + 10;
+        while (conteudo.charAt(valor) == '\n' || conteudo.charAt(valor) == ' ') {
+            valor++;
+        }
+        System.out.println(conteudo.charAt(valor));
         System.out.println(valor);
-        String variaveis = "";
-        return variaveis;
+        return valor-1;
     }
 
 }
