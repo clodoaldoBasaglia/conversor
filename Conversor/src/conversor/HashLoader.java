@@ -27,7 +27,6 @@ public class HashLoader {
     }
 
     public HashMap<String, String> hashCreator() {
-        linguagem.put("teste","ola");
         linguagem.put("mostra", "System.out.println(;");
         linguagem.put("inteiro", "int;");
         linguagem.put("decimal", "double;");
@@ -66,11 +65,11 @@ public class HashLoader {
         }
         String[] splitLinhas = conteudoDaHash.split(";");
         String[] traducao;
-        System.out.println(splitLinhas.length);
-        for (int i = 0; i < splitLinhas.length; i++) {
+//        System.out.println(splitLinhas.length);
+        for (int i = 0; i < splitLinhas.length-1; i++) {
             traducao = splitLinhas[i].split("~");
-            System.out.println(traducao.length + " " + traducao[0]);
-//            linguagem.put(traducao[0], traducao[1]);
+//            System.out.println(traducao.length + " " + traducao[0]);
+            linguagem.put(traducao[0], traducao[1]);
         }
         return linguagem;
     }

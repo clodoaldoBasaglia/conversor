@@ -33,12 +33,18 @@ public class Controller {
     public String transformeToJava(String conteudo) throws IOException {
 //        System.out.println(conteudo);
         HashLoader hl = new HashLoader();
-        HashMap<String, String> hashCreator = hl.loadHash();
+        HashMap<String, String> hashLoaded = hl.loadHash();
+        System.out.println("tamanho da hash carregada " + hashLoaded.size());
         String linhaIdentificadora = conteudo.substring(0, conteudo.indexOf(";"));
+        
         String[] identificacao = linhaIdentificadora.split(" ");
         identificacao[0] = identificacao[0].trim();
-//        String cabecalho = (String) hashCreator.
-//        System.out.println(cabecalho + identificacao[1]);
+        String corpo = "";
+        String variaveis = "";
+        String cabecalho = hashLoaded.get(identificacao[0]) + " " + identificacao[1] + "{";
+        corpo = cabecalho + "\n " + "public static void main(String[] args) {" + "\n";
+        variaveis = achaVariaveis(conteudo,linhaIdentificadora.length()+1);
+        System.out.println(corpo);
         return conteudo;
     }
 
@@ -52,6 +58,18 @@ public class Controller {
             conteudo += texto + "\n";
         }
         return conteudo;
+    }
+
+    private String achaVariaveis(String conteudo, int length) {
+        int valor = length;
+        System.out.println(conteudo.charAt(valor));
+        while(conteudo.charAt(valor)=='\n' || conteudo.charAt(valor)==' '){
+            valor++;
+        }
+        System.out.println(conteudo.charAt(valor++));
+        System.out.println(valor);
+        String variaveis = "";
+        return variaveis;
     }
 
 }
