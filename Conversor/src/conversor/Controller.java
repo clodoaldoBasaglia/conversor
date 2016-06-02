@@ -34,19 +34,22 @@ public class Controller {
 //        System.out.println(conteudo);
         HashLoader hl = new HashLoader();
         HashMap<String, String> hashLoaded = hl.loadHash();
-        System.out.println("tamanho da hash carregada " + hashLoaded.size());
+//        System.out.println("tamanho da hash carregada " + hashLoaded.size());
         String linhaIdentificadora = conteudo.substring(0, conteudo.indexOf(";"));
 
         String[] identificacao = linhaIdentificadora.split(" ");
         identificacao[0] = identificacao[0].trim();
         String corpo = "";
-
         String cabecalho = hashLoaded.get(identificacao[0]) + " " + identificacao[1] + "{";
         corpo = cabecalho + "\n " + "public static void main(String[] args) " + "\n";
-        int variaveis = achaVariaveis(conteudo, linhaIdentificadora.length() + 1);
-        corpo+="{";
-        String linhaVar = conteudo.substring(variaveis,conteudo.indexOf(";"));
-        System.out.println(linhaVar);
+        int var = achaVariaveis(conteudo, linhaIdentificadora.length() + 1);
+        corpo += "{";
+        int aux = var + conteudo.indexOf(";");
+        int pos = andaEspacoEmBranco(conteudo, aux);
+        System.out.println(pos);
+
+        String v = conteudo.substring(pos, pos + conteudo.indexOf("\n") - 1);
+        System.out.println(v.trim());
         return conteudo;
     }
 
@@ -64,17 +67,23 @@ public class Controller {
 
     private int achaVariaveis(String conteudo, int length) {
         int valor = length;
-        System.out.println(conteudo.charAt(valor));
+//        System.out.println(conteudo.charAt(valor));
         while (conteudo.charAt(valor) == '\n' || conteudo.charAt(valor) == ' ') {
             valor++;
         }
-        valor = valor + 10;
+        valor = valor + 6;
         while (conteudo.charAt(valor) == '\n' || conteudo.charAt(valor) == ' ') {
             valor++;
         }
-        System.out.println(conteudo.charAt(valor));
-        System.out.println(valor);
-        return valor-1;
+//        System.out.println(conteudo.charAt(valor));
+//        System.out.println(valor);
+        return valor - 1;
     }
 
+    private int andaEspacoEmBranco(String conteudo, int aux) {
+        while (conteudo.charAt(aux) == '\n' || conteudo.charAt(aux) == ' ') {
+            aux++;
+        }
+        return aux;
+    }
 }
