@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -31,10 +32,18 @@ public class Controller {
     }
 
     public String transformeToJava(String conteudo) throws IOException {
-//        System.out.println(conteudo);
+        ArrayList<String> arrayLinhas = new ArrayList<String>();
+        String[] vetor = conteudo.split("\n");
+
+        for (int i = 0; i < vetor.length; i++) {
+            System.out.println(vetor[i].toString() + i);
+            arrayLinhas.add(vetor[i].toString());
+        }
+        /*
+        System.out.println(conteudo);
         HashLoader hl = new HashLoader();
         HashMap<String, String> hashLoaded = hl.loadHash();
-//        System.out.println("tamanho da hash carregada " + hashLoaded.size());
+        System.out.println("tamanho da hash carregada " + hashLoaded.size());
         String linhaIdentificadora = conteudo.substring(0, conteudo.indexOf(";"));
 
         String[] identificacao = linhaIdentificadora.split(" ");
@@ -44,12 +53,15 @@ public class Controller {
         corpo = cabecalho + "\n " + "public static void main(String[] args) " + "\n";
         int var = achaVariaveis(conteudo, linhaIdentificadora.length() + 1);
         corpo += "{";
+        String doSomething = concatenaVariaveis(conteudo, var);
+
         int aux = var + conteudo.indexOf(";");
         int pos = andaEspacoEmBranco(conteudo, aux);
         System.out.println(pos);
 
         String v = conteudo.substring(pos, pos + conteudo.indexOf("\n") - 1);
         System.out.println(v.trim());
+         */
         return conteudo;
     }
 
@@ -85,5 +97,26 @@ public class Controller {
             aux++;
         }
         return aux;
+    }
+
+    private String concatenaVariaveis(String conteudo, int var) {
+//        System.out.println(conteudo.charAt(var));
+        int cont = 0;
+        int auxiliar = conteudo.indexOf(":");
+        int contagem = auxiliar + conteudo.indexOf(";");
+        String intervalo = conteudo.substring(auxiliar, contagem);
+        intervalo = intervalo.trim();
+//        System.out.println(intervalo);
+        while (!intervalo.trim().equalsIgnoreCase("fim;")) {
+
+            intervalo = conteudo.substring(auxiliar, contagem);
+            intervalo = intervalo.trim();
+            auxiliar = contagem;
+            contagem = auxiliar + conteudo.indexOf(";");
+            System.out.println(intervalo + " " + cont);
+            cont++;
+        }
+
+        return "";
     }
 }
