@@ -33,36 +33,52 @@ public class Controller {
 
     public String transformeToJava(String conteudo) throws IOException {
         ArrayList<String> arrayLinhas = new ArrayList<String>();
-        String[] vetor = conteudo.split("\n");
-
-        for (int i = 0; i < vetor.length; i++) {
-            System.out.println(vetor[i].toString() + i);
-            arrayLinhas.add(vetor[i].toString());
-        }
-        /*
-        System.out.println(conteudo);
+        ArrayList<String> arrayVariaveis = new ArrayList<String>();
+        ArrayList<String> splitVariaveis = new ArrayList<String>();
         HashLoader hl = new HashLoader();
         HashMap<String, String> hashLoaded = hl.loadHash();
-        System.out.println("tamanho da hash carregada " + hashLoaded.size());
-        String linhaIdentificadora = conteudo.substring(0, conteudo.indexOf(";"));
-
-        String[] identificacao = linhaIdentificadora.split(" ");
-        identificacao[0] = identificacao[0].trim();
+        conteudo = conteudo.trim();
+        String[] vetor = conteudo.split("\n");
         String corpo = "";
-        String cabecalho = hashLoaded.get(identificacao[0]) + " " + identificacao[1] + "{";
-        corpo = cabecalho + "\n " + "public static void main(String[] args) " + "\n";
-        int var = achaVariaveis(conteudo, linhaIdentificadora.length() + 1);
-        corpo += "{";
-        String doSomething = concatenaVariaveis(conteudo, var);
+        String tab = "    ";
+        String psvm = "public static void main(String[] args){ ";
+        for (int i = 0; i < vetor.length; i++) {
+            arrayLinhas.add(vetor[i].toString());
+        }
+        int pos = arrayLinhas.indexOf("variavies:");
+        int fim = arrayLinhas.indexOf("fimvar;");
+        System.out.println("Inicio: " + pos + "Fim: " + fim);
+        pos++;
+        for (int i = pos; i < fim; i++) {
+            arrayVariaveis.add(arrayLinhas.get(i));
+        }
+        String identificacao = arrayLinhas.get(0);
+        String[] splitIdentificacao = identificacao.split(" ");
+        corpo += hashLoaded.get(splitIdentificacao[0]);
+        corpo += " " + splitIdentificacao[1].replace(";", "{ \n");
+        corpo += tab + psvm;
+        for (String var : arrayVariaveis) {
+            String[] split = var.split(" ");
+            if (split.length == 2) {
+                corpo += hashLoaded.get(split[0].trim()) + " " + split[1].trim();
+            }
+        }
 
-        int aux = var + conteudo.indexOf(";");
-        int pos = andaEspacoEmBranco(conteudo, aux);
-        System.out.println(pos);
+        for (int i = fim + 1; i < arrayLinhas.size(); i++) {
+            if (arrayLinhas.get(i).trim().equals("inicio\n")) {
+                System.out.println("achou o primeiro inicio");
+            }
+        }
+        for (int i = fim + 1; i < arrayLinhas.size(); i++) {
+            if (!arrayLinhas.get(i).trim().equals("fim.")
+                    || !arrayLinhas.get(i).equals("inicio")) {
+                corpo += arrayLinhas.get(i).trim();
+            }
+        }
 
-        String v = conteudo.substring(pos, pos + conteudo.indexOf("\n") - 1);
-        System.out.println(v.trim());
-         */
-        return conteudo;
+        System.out.println(corpo);
+
+        return corpo;
     }
 
     String abreArquivo(String caminho) throws FileNotFoundException, IOException {
