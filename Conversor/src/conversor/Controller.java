@@ -41,11 +41,11 @@ public class Controller {
         String[] vetor = conteudo.split("\n");
         String corpo = "";
         String tab = "    ";
-        String psvm = "public static void main(String[] args){ ";
+        String psvm = "public static void main(String[] args){ \n";
         for (int i = 0; i < vetor.length; i++) {
             arrayLinhas.add(vetor[i].toString());
         }
-        int pos = arrayLinhas.indexOf("variavies:");
+        int pos = arrayLinhas.indexOf("variaveis:");
         int fim = arrayLinhas.indexOf("fimvar;");
         System.out.println("Inicio: " + pos + "Fim: " + fim);
         pos++;
@@ -54,30 +54,32 @@ public class Controller {
         }
         String identificacao = arrayLinhas.get(0);
         String[] splitIdentificacao = identificacao.split(" ");
-        corpo += hashLoaded.get(splitIdentificacao[0]);
+        System.out.println(splitIdentificacao[0]);
+        corpo += hashLoaded.get(splitIdentificacao[0].trim());
         corpo += " " + splitIdentificacao[1].replace(";", "{ \n");
         corpo += tab + psvm;
+
         for (String var : arrayVariaveis) {
             String[] split = var.split(" ");
             if (split.length == 2) {
-                corpo += hashLoaded.get(split[0].trim()) + " " + split[1].trim();
+                System.out.println(split[0].trim());
+                corpo += "\t" + hashLoaded.get(split[0].trim()) + " " + split[1].trim() + "\n";
             }
+        }
+        for (int i = fim + 2; i < arrayLinhas.size(); i++) {
+            arrayLinhas.set(i, arrayLinhas.get(i).replaceAll("inicio", "{"));
+            arrayLinhas.set(i, arrayLinhas.get(i).replaceAll("fim.", "}"));
+            arrayLinhas.set(i, arrayLinhas.get(i).replaceAll("fim", "}"));
+        }
+        for (int i = fim + 1; i < arrayLinhas.size(); i++) {
+            arrayLinhas.set(i, arrayLinhas.get(i).replace("inicio", ""));
         }
 
         for (int i = fim + 1; i < arrayLinhas.size(); i++) {
-            if (arrayLinhas.get(i).trim().equals("inicio\n")) {
-                System.out.println("achou o primeiro inicio");
-            }
+            corpo += arrayLinhas.get(i) + "\n";
         }
-        for (int i = fim + 1; i < arrayLinhas.size(); i++) {
-            if (!arrayLinhas.get(i).trim().equals("fim.")
-                    || !arrayLinhas.get(i).equals("inicio")) {
-                corpo += arrayLinhas.get(i).trim();
-            }
-        }
-
-        System.out.println(corpo);
-
+        //substitui mostra
+        corpo += corpo.replaceAll("mostra", hashLoaded.get("mostra"));
         return corpo;
     }
 

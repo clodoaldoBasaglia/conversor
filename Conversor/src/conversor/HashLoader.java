@@ -27,15 +27,17 @@ public class HashLoader {
     }
 
     public HashMap<String, String> hashCreator() {
-        linguagem.put("mostra", "System.out.println(;");
+        linguagem.put("mostra", "System.out.println;");
         linguagem.put("inteiro", "int;");
         linguagem.put("decimal", "double;");
         linguagem.put("booleano", "boolean;");
         linguagem.put("se", "if;");
         linguagem.put("senao", "else;");
         linguagem.put("programa", "public class;");
-        linguagem.put("inicio", "{;");
+        linguagem.put("inicio", "{;\n");
         linguagem.put("fim", "};");
+        linguagem.put("fim.", "};");
+
         String info = "";
         for (Map.Entry<String, String> entry : linguagem.entrySet()) {
             String key = entry.getKey();
@@ -58,7 +60,7 @@ public class HashLoader {
         FileUtils fu = new FileUtils();
         String conteudoDaHash = fu.abrirArquivoHash("linguagem.txt");
         linguagem.clear();
-        if(linguagem.isEmpty()){
+        if (linguagem.isEmpty()) {
             System.out.println("sim");
         } else {
             System.out.println("não");
@@ -66,7 +68,7 @@ public class HashLoader {
         String[] splitLinhas = conteudoDaHash.split(";");
         String[] traducao;
 //        System.out.println(splitLinhas.length);
-        for (int i = 0; i < splitLinhas.length-1; i++) {
+        for (int i = 0; i < splitLinhas.length - 1; i++) {
             traducao = splitLinhas[i].split("~");
 //            System.out.println(traducao.length + " " + traducao[0]);
             linguagem.put(traducao[0], traducao[1]);

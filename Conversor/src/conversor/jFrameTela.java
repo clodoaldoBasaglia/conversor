@@ -343,16 +343,17 @@ public class jFrameTela extends javax.swing.JFrame {
     }
 
     private void abrirArquivo() throws IOException {
-        int retornoValor = jFileChooser1.showDialog(this, "Abrir");
-        jFileChooser1.setDialogTitle("Escolha seu arquivo");
-        String caminho;
-        String conteudo = "";
-        if (retornoValor == jFileChooser1.APPROVE_OPTION) {
-            System.out.println(jFileChooser1.getSelectedFile());
-            caminho = jFileChooser1.getSelectedFile().toString();
-            this.arquivo = caminho;
-            conteudo = ct.abreArquivo(caminho);
-        }
+//        int retornoValor = jFileChooser1.showDialog(this, "Abrir");
+//        jFileChooser1.setDialogTitle("Escolha seu arquivo");
+//        String caminho;
+//        String conteudo = "";
+//        if (retornoValor == jFileChooser1.APPROVE_OPTION) {
+//            System.out.println(jFileChooser1.getSelectedFile());
+//            caminho = jFileChooser1.getSelectedFile().toString();
+//        }
+        String caminho = "/home/todos/alunos/cm/a968692/Documentos/conversor/Conversor/teste.dod";
+        this.arquivo = caminho;
+        String conteudo = ct.abreArquivo(caminho);
         jTextArea1.setText(conteudo);
     }
 }
