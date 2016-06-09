@@ -28,11 +28,13 @@ public class Controller {
 //        System.out.println(caminho);
         String codeInJava = transformeToJava(conteudo);
         FileUtils fu = new FileUtils();
-//        System.out.println(fu.SalvaArquivo(caminho, conteudo));
+        fu.SalvaArquivo(caminho, conteudo);
+        fu.SalvaArquivoEmJava(caminho, codeInJava);
     }
 
     public String transformeToJava(String conteudo) throws IOException {
         ArrayList<String> arrayLinhas = new ArrayList<String>();
+        ArrayList<String> correcao = new ArrayList<String>();
         ArrayList<String> arrayVariaveis = new ArrayList<String>();
         ArrayList<String> splitVariaveis = new ArrayList<String>();
         HashLoader hl = new HashLoader();
@@ -42,44 +44,52 @@ public class Controller {
         String corpo = "";
         String tab = "    ";
         String psvm = "public static void main(String[] args){ \n";
-        for (int i = 0; i < vetor.length; i++) {
-            arrayLinhas.add(vetor[i].toString());
+        for (String vetor1 : vetor) {
+            arrayLinhas.add(vetor1);
         }
         int pos = arrayLinhas.indexOf("variaveis:");
         int fim = arrayLinhas.indexOf("fimvar;");
-        System.out.println("Inicio: " + pos + "Fim: " + fim);
+//        System.out.println("Inicio: " + pos + "Fim: " + fim);
         pos++;
         for (int i = pos; i < fim; i++) {
             arrayVariaveis.add(arrayLinhas.get(i));
         }
         String identificacao = arrayLinhas.get(0);
         String[] splitIdentificacao = identificacao.split(" ");
-        System.out.println(splitIdentificacao[0]);
+//        System.out.println(splitIdentificacao[0]);
         corpo += hashLoaded.get(splitIdentificacao[0].trim());
         corpo += " " + splitIdentificacao[1].replace(";", "{ \n");
         corpo += tab + psvm;
-
+        /* String whatTheHellHappened = "";
         for (String var : arrayVariaveis) {
             String[] split = var.split(" ");
             if (split.length == 2) {
-                System.out.println(split[0].trim());
-                corpo += "\t" + hashLoaded.get(split[0].trim()) + " " + split[1].trim() + "\n";
+//                System.out.println(split[0].trim());
+                whatTheHellHappened += "\t" + hashLoaded.get(split[0].trim()) + " " + split[1].trim() + "\n";
             }
         }
+        corpo += whatTheHellHappened;
         for (int i = fim + 2; i < arrayLinhas.size(); i++) {
             arrayLinhas.set(i, arrayLinhas.get(i).replaceAll("inicio", "{"));
             arrayLinhas.set(i, arrayLinhas.get(i).replaceAll("fim.", "}"));
             arrayLinhas.set(i, arrayLinhas.get(i).replaceAll("fim", "}"));
         }
+        for(int i = 0; i < arrayLinhas.size();i++){
+            System.out.println(arrayLinhas.get(i));
+        }
+        /*
         for (int i = fim + 1; i < arrayLinhas.size(); i++) {
             arrayLinhas.set(i, arrayLinhas.get(i).replace("inicio", ""));
         }
-
+         
+        String somethingIsWrongAndIdontKnowWhat = "";
         for (int i = fim + 1; i < arrayLinhas.size(); i++) {
-            corpo += arrayLinhas.get(i) + "\n";
+            somethingIsWrongAndIdontKnowWhat += arrayLinhas.get(i) + "\n";
         }
+        corpo += somethingIsWrongAndIdontKnowWhat; */
         //substitui mostra
         corpo += corpo.replaceAll("mostra", hashLoaded.get("mostra"));
+        System.out.println(corpo.length());
         return corpo;
     }
 
@@ -95,46 +105,4 @@ public class Controller {
         return conteudo;
     }
 
-    private int achaVariaveis(String conteudo, int length) {
-        int valor = length;
-//        System.out.println(conteudo.charAt(valor));
-        while (conteudo.charAt(valor) == '\n' || conteudo.charAt(valor) == ' ') {
-            valor++;
-        }
-        valor = valor + 6;
-        while (conteudo.charAt(valor) == '\n' || conteudo.charAt(valor) == ' ') {
-            valor++;
-        }
-//        System.out.println(conteudo.charAt(valor));
-//        System.out.println(valor);
-        return valor - 1;
-    }
-
-    private int andaEspacoEmBranco(String conteudo, int aux) {
-        while (conteudo.charAt(aux) == '\n' || conteudo.charAt(aux) == ' ') {
-            aux++;
-        }
-        return aux;
-    }
-
-    private String concatenaVariaveis(String conteudo, int var) {
-//        System.out.println(conteudo.charAt(var));
-        int cont = 0;
-        int auxiliar = conteudo.indexOf(":");
-        int contagem = auxiliar + conteudo.indexOf(";");
-        String intervalo = conteudo.substring(auxiliar, contagem);
-        intervalo = intervalo.trim();
-//        System.out.println(intervalo);
-        while (!intervalo.trim().equalsIgnoreCase("fim;")) {
-
-            intervalo = conteudo.substring(auxiliar, contagem);
-            intervalo = intervalo.trim();
-            auxiliar = contagem;
-            contagem = auxiliar + conteudo.indexOf(";");
-            System.out.println(intervalo + " " + cont);
-            cont++;
-        }
-
-        return "";
-    }
 }

@@ -27,14 +27,14 @@ public class HashLoader {
     }
 
     public HashMap<String, String> hashCreator() {
-        linguagem.put("mostra", "System.out.println;");
         linguagem.put("inteiro", "int;");
+        linguagem.put("mostra", "System.out.println;");
         linguagem.put("decimal", "double;");
         linguagem.put("booleano", "boolean;");
         linguagem.put("se", "if;");
         linguagem.put("senao", "else;");
         linguagem.put("programa", "public class;");
-        linguagem.put("inicio", "{;\n");
+        linguagem.put("inicio", "{;");
         linguagem.put("fim", "};");
         linguagem.put("fim.", "};");
 
@@ -60,11 +60,11 @@ public class HashLoader {
         FileUtils fu = new FileUtils();
         String conteudoDaHash = fu.abrirArquivoHash("linguagem.txt");
         linguagem.clear();
-        if (linguagem.isEmpty()) {
-            System.out.println("sim");
-        } else {
-            System.out.println("não");
-        }
+//        if (linguagem.isEmpty()) {
+//            System.out.println("sim");
+//        } else {
+//            System.out.println("não");
+//        }
         String[] splitLinhas = conteudoDaHash.split(";");
         String[] traducao;
 //        System.out.println(splitLinhas.length);

@@ -1,10 +1,15 @@
 programa teste;
 variaveis:
-	int i;
-	int b;
+    inteiro i;
+    inteiro b;
+    inteiro c;
+    booleano a;
+fimvar;
 inicio
-	i = 1;
-	b = 2;
-	mostra(i);
-	mostra(b);
+    a = true;
+    i = 1;
+    b = 2;
+    c = i + b;
+    mostra(a);
+    mostra(c);
 fim.

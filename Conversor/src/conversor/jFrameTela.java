@@ -351,7 +351,7 @@ public class jFrameTela extends javax.swing.JFrame {
 //            System.out.println(jFileChooser1.getSelectedFile());
 //            caminho = jFileChooser1.getSelectedFile().toString();
 //        }
-        String caminho = "/home/todos/alunos/cm/a968692/Documentos/conversor/Conversor/teste.dod";
+        String caminho = "/home/clodoaldo/UTFPR2016/EstruturaDados2/Conversor/teste.dod";
         this.arquivo = caminho;
         String conteudo = ct.abreArquivo(caminho);
         jTextArea1.setText(conteudo);

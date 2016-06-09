@@ -1,1 +1,1 @@
-programa~public class;booleano~boolean;inicio~{;mostra~System.out.println(;senao~else;fim~};se~if;inteiro~int;decimal~double;
+programa~public class;booleano~boolean;inicio~{;mostra~System.out.println;senao~else;fim~};se~if;inteiro~int;decimal~double;fim.~};
