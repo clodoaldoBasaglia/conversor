@@ -2,14 +2,14 @@ programa teste;
 variaveis:
     inteiro i;
     inteiro b;
-    inteiro c;
+    decimal c;
     booleano a;
 fimvar;
 inicio
     a = true;
     i = 1;
     b = 2;
-    c = i + b;
+    c = (i + b+9*7)/3;
     mostra(a);
     mostra(c);
 fim.

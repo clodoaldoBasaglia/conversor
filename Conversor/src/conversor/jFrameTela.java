@@ -330,7 +330,13 @@ public class jFrameTela extends javax.swing.JFrame {
     }
 
     private void verificaCodigo() throws IOException {
-        cp.compila(arquivo);
+        Centralizador central = new Centralizador();
+        FileUtils fu = new FileUtils();
+        String codigo = jTextArea1.getText();
+        String inJava = central.transformeToJava(codigo);
+        String caminho = this.arquivo.substring(0, arquivo.indexOf("."));
+        fu.SalvaArquivoEmJava(caminho, inJava);
+//        cp.compila(arquivo);
     }
 
     private void executa() throws IOException, InterruptedException {

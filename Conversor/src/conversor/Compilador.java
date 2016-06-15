@@ -42,7 +42,7 @@ public class Compilador {
         if (arq.isFile()) {
             String conteudo = ct.abreArquivo(arquivo);
             String transformeToJava = new Centralizador().transformeToJava(conteudo);
-//            ct.salva(conteudo, transformeToJava);
+            
 
         } else {
             System.out.println("Selecione um arquivo.");
