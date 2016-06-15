@@ -5,8 +5,6 @@
  */
 package conversor;
 
-import java.util.HashMap;
-
 /**
  *
  * @author clodoaldo

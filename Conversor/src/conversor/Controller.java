@@ -44,6 +44,7 @@ public class Controller {
         String corpo = "";
         String tab = "    ";
         String psvm = "public static void main(String[] args){ \n";
+
         for (String vetor1 : vetor) {
             arrayLinhas.add(vetor1);
         }
@@ -52,7 +53,8 @@ public class Controller {
 //        System.out.println("Inicio: " + pos + "Fim: " + fim);
         pos++;
         for (int i = pos; i < fim; i++) {
-            arrayVariaveis.add(arrayLinhas.get(i));
+            System.out.println(arrayLinhas.get(i));
+//            arrayVariaveis.add(arrayLinhas.get(i));
         }
         String identificacao = arrayLinhas.get(0);
         String[] splitIdentificacao = identificacao.split(" ");
@@ -89,7 +91,7 @@ public class Controller {
         corpo += somethingIsWrongAndIdontKnowWhat; */
         //substitui mostra
         corpo += corpo.replaceAll("mostra", hashLoaded.get("mostra"));
-        System.out.println(corpo.length());
+        System.out.println(corpo);
         return corpo;
     }
 
