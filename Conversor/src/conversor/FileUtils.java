@@ -40,13 +40,13 @@ public class FileUtils {
         return conteudo;
     }
 
-    public boolean SalvaArquivoEmJava(String caminho, String info) throws IOException {
+    public String SalvaArquivoEmJava(String caminho, String info) throws IOException {
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(caminho + ".java"), "utf-8"))) {
             writer.write(info);
-            return true;
+            return caminho+".java";
         } catch (IOException ex) {
-            return false;
+            return null;
         }
     }
 

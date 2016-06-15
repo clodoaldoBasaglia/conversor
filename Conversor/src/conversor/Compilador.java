@@ -19,31 +19,43 @@ public class Compilador {
     Controller ct = new Controller();
 
     public void run(String arquivo) throws IOException, InterruptedException {
-        File arq = new File(arquivo);
-//        System.out.println(arq.isFile());
-        String comando = "javac " + arq;
+        System.out.println(arquivo);
+        String caminho = arquivo.substring(0, arquivo.indexOf("."));
+        System.out.println(caminho);
+        File arq = new File(caminho);
+        System.out.println(arq.isFile() ? "sim " : "não");/*
+        String comando = "java " + caminho;
         Process processo = Runtime.getRuntime().exec(comando);
         BufferedReader reader
                 = new BufferedReader(new InputStreamReader(processo.getInputStream()));
-
         String line = "";
         while ((line = reader.readLine()) != null) {
             System.out.print(line + "\n");
         }
 
         processo.waitFor();
+         */
     }
 
     public void compilaAndRun() {
     }
 
-    void compila(String arquivo) throws IOException {
+    void compila(String arquivo) throws IOException, InterruptedException {
         File arq = new File(arquivo);
+        System.out.println(arq.isFile());
         if (arq.isFile()) {
-            String conteudo = ct.abreArquivo(arquivo);
-            String transformeToJava = new Centralizador().transformeToJava(conteudo);
-            
+            String comando = "javac " + arq;
+            Process processo = Runtime.getRuntime().exec(comando);
+            BufferedReader reader
+                    = new BufferedReader(new InputStreamReader(processo.getInputStream()));
 
+            String line = "";
+            System.out.println("compilando...");
+            while ((line = reader.readLine()) != null) {
+                System.out.print(line + "\n");
+            }
+            processo.waitFor();
+            System.out.println("ok");
         } else {
             System.out.println("Selecione um arquivo.");
         }

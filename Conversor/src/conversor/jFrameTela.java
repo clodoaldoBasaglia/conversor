@@ -24,6 +24,7 @@ public class jFrameTela extends javax.swing.JFrame {
     Controller ct = new Controller();
     Compilador cp = new Compilador();
     String arquivo = "";
+    String arquivoJava = "";
 
     public jFrameTela() {
         initComponents();
@@ -46,6 +47,8 @@ public class jFrameTela extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -98,6 +101,10 @@ public class jFrameTela extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
+
+        jTextArea2.setColumns(20);
+        jTextArea2.setRows(5);
+        jScrollPane2.setViewportView(jTextArea2);
 
         jMenu1.setText("File");
 
@@ -158,14 +165,17 @@ public class jFrameTela extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2)
+                        .addGap(15, 15, 15))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)))
+                        .addComponent(jButton3))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -177,8 +187,10 @@ public class jFrameTela extends javax.swing.JFrame {
                     .addComponent(jButton2)
                     .addComponent(jButton3))
                 .addGap(19, 19, 19)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -227,11 +239,19 @@ public class jFrameTela extends javax.swing.JFrame {
             verificaCodigo();
         } catch (IOException ex) {
             Logger.getLogger(jFrameTela.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(jFrameTela.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        testAndRun();
+        try {
+            testAndRun();
+        } catch (IOException ex) {
+            Logger.getLogger(jFrameTela.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(jFrameTela.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextArea1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea1KeyTyped
@@ -249,6 +269,8 @@ public class jFrameTela extends javax.swing.JFrame {
             try {
                 verificaCodigo();
             } catch (IOException ex) {
+                Logger.getLogger(jFrameTela.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
                 Logger.getLogger(jFrameTela.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -305,7 +327,9 @@ public class jFrameTela extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
 
     private void novoProjeto() {
@@ -313,15 +337,15 @@ public class jFrameTela extends javax.swing.JFrame {
     }
 
     private void salvarArquivo() throws IOException {
+        FileUtils fu = new FileUtils();
         int retornoValor = jFileChooser1.showDialog(this, "Salvar");
         jFileChooser1.setDialogTitle("Salve seu arquivo");
         if (retornoValor == jFileChooser1.APPROVE_OPTION) {
             System.out.println(jFileChooser1.getSelectedFile());
             String caminho = jFileChooser1.getSelectedFile().toString();
             String conteudo = jTextArea1.getText();
-
             this.arquivo = caminho;
-            ct.salva(caminho, conteudo);
+            fu.SalvaArquivo(caminho, conteudo);
         }
     }
 
@@ -329,37 +353,42 @@ public class jFrameTela extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void verificaCodigo() throws IOException {
+    private void verificaCodigo() throws IOException, InterruptedException {
         Centralizador central = new Centralizador();
         FileUtils fu = new FileUtils();
         String codigo = jTextArea1.getText();
         String inJava = central.transformeToJava(codigo);
         String caminho = this.arquivo.substring(0, arquivo.indexOf("."));
-        fu.SalvaArquivoEmJava(caminho, inJava);
-//        cp.compila(arquivo);
+        this.arquivoJava = caminho + ".java";
+        String SalvaArquivoEmJava = fu.SalvaArquivoEmJava(caminho, inJava);
+        cp.compila(SalvaArquivoEmJava);
     }
 
     private void executa() throws IOException, InterruptedException {
-
-        cp.run(arquivo);
+        cp.run(this.arquivoJava);
     }
 
-    private void testAndRun() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void testAndRun() throws IOException, InterruptedException {
+        verificaCodigo();
+        cp.run(arquivoJava);
     }
 
     private void abrirArquivo() throws IOException {
-//        int retornoValor = jFileChooser1.showDialog(this, "Abrir");
-//        jFileChooser1.setDialogTitle("Escolha seu arquivo");
-//        String caminho;
-//        String conteudo = "";
-//        if (retornoValor == jFileChooser1.APPROVE_OPTION) {
-//            System.out.println(jFileChooser1.getSelectedFile());
-//            caminho = jFileChooser1.getSelectedFile().toString();
-//        }
+        int retornoValor = jFileChooser1.showDialog(this, "Abrir");
+        jFileChooser1.setDialogTitle("Escolha seu arquivo");
+        String caminho;
+        String conteudo = "";
+        if (retornoValor == jFileChooser1.APPROVE_OPTION) {
+            System.out.println(jFileChooser1.getSelectedFile());
+            caminho = jFileChooser1.getSelectedFile().toString();
+            this.arquivo = caminho;
+            conteudo = ct.abreArquivo(caminho);
+            jTextArea1.setText(conteudo);
+        }
+        /*
         String caminho = "/home/clodoaldo/UTFPR2016/EstruturaDados2/Conversor/teste.dod";
-        this.arquivo = caminho;
-        String conteudo = ct.abreArquivo(caminho);
-        jTextArea1.setText(conteudo);
+            String conteudo = ct.abreArquivo(caminho);
+            String conteudo = ct.abreArquivo(caminho);
+         */
     }
 }

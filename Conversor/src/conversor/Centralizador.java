@@ -44,16 +44,16 @@ public class Centralizador {
             corpo = corpo.concat("\t" + hashLoaded.get(split[0].trim()) + " " + split[1].trim());
         }
         for (int i = fim; i < arrayLinhas.size(); i++) {
-            corpo = "\t" + corpo.concat(arrayLinhas.get(i) + "\n");
+            corpo += "\t" + arrayLinhas.get(i) + "\n";
         }
         corpo = corpo.replaceAll("fimvar.", " ");
         corpo = corpo.replaceAll("mostra", hashLoaded.get("mostra"));
         corpo = corpo.replaceAll("fim.", hashLoaded.get("fim."));
         corpo = corpo.replaceAll("inicio", " ");
-
+        corpo += "}";
+        System.out.println(corpo);
         //substitui mostra
         return corpo;
     }
-    
 
 }
