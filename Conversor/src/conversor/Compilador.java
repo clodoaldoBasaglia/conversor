@@ -19,6 +19,7 @@ public class Compilador {
     Controller ct = new Controller();
 
     public void run(String arquivo) throws IOException, InterruptedException {
+        // OLHAR ISSO URGENTE http://stackoverflow.com/questions/10125639/how-to-create-a-jar-file-using-the-terminal
         System.out.println(arquivo);
         String caminho = arquivo.substring(0, arquivo.indexOf("."));
         System.out.println(caminho);
