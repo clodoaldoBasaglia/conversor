@@ -41,8 +41,8 @@ public class Compilador {
         File arq = new File(arquivo);
         if (arq.isFile()) {
             String conteudo = ct.abreArquivo(arquivo);
-            String transformeToJava = ct.transformeToJava(conteudo);
-            ct.salva(conteudo, transformeToJava);
+            String transformeToJava = new Centralizador().transformeToJava(conteudo);
+//            ct.salva(conteudo, transformeToJava);
 
         } else {
             System.out.println("Selecione um arquivo.");

@@ -26,7 +26,7 @@ public class Controller {
     void salva(String caminho, String conteudo) throws IOException {
 //        System.out.println(conteudo);
 //        System.out.println(caminho);
-        String codeInJava = transformeToJava(conteudo);
+        String codeInJava =null; /*transformeToJava(conteudo);*/
         FileUtils fu = new FileUtils();
         fu.SalvaArquivo(caminho, conteudo);
         fu.SalvaArquivoEmJava(caminho, codeInJava);
