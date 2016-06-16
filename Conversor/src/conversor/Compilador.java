@@ -6,9 +6,13 @@
 package conversor;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 /**
  *
@@ -20,22 +24,27 @@ public class Compilador {
 
     public void run(String arquivo) throws IOException, InterruptedException {
         // OLHAR ISSO URGENTE http://stackoverflow.com/questions/10125639/how-to-create-a-jar-file-using-the-terminal
-        System.out.println(arquivo);
-        String caminho = arquivo.substring(0, arquivo.indexOf("."));
-        System.out.println(caminho);
-        File arq = new File(caminho);
-        System.out.println(arq.isFile() ? "sim " : "não");/*
-        String comando = "java " + caminho;
-        Process processo = Runtime.getRuntime().exec(comando);
-        BufferedReader reader
+        String nomeClasse = arquivo.substring(arquivo.lastIndexOf("/") + 1, arquivo.indexOf("."));
+        criaManifest(nomeClasse);
+        String comandoCriaJar = "jar cfm " + nomeClasse + ".jar Manifest.txt " + nomeClasse + ".class";
+        Process processo = Runtime.getRuntime().exec(comandoCriaJar);
+        BufferedReader readerJar
                 = new BufferedReader(new InputStreamReader(processo.getInputStream()));
+        String linha = "";
+        while ((linha = readerJar.readLine()) != null) {
+            System.out.println(linha + "\n");
+        }
+        processo.destroy();
+        String comandoRodaJar = "java -jar " + nomeClasse + ".jar";
+        Process processoRoda = Runtime.getRuntime().exec(comandoRodaJar);
+        BufferedReader reader
+                = new BufferedReader(new InputStreamReader(processoRoda.getInputStream()));
         String line = "";
         while ((line = reader.readLine()) != null) {
             System.out.print(line + "\n");
         }
 
-        processo.waitFor();
-         */
+        processoRoda.waitFor();
     }
 
     public void compilaAndRun() {
@@ -60,7 +69,15 @@ public class Compilador {
         } else {
             System.out.println("Selecione um arquivo.");
         }
-//        System.out.println(arq.isFile());
 
+    }
+
+    private void criaManifest(String nomeClasse) {
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("Manifest.txt"), "utf-8"))) {
+            writer.write("Main-class: " + nomeClasse + "\n");
+        } catch (IOException ex) {
+            System.out.println("Erro ao criar o Manifest");
+        }
     }
 }

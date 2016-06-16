@@ -332,7 +332,9 @@ public class jFrameTela extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void novoProjeto() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        jTextArea1.setText(null);
+        this.arquivo = null;
+        this.arquivoJava = null;
     }
 
     private void salvarArquivo() throws IOException {
@@ -356,15 +358,23 @@ public class jFrameTela extends javax.swing.JFrame {
         Centralizador central = new Centralizador();
         FileUtils fu = new FileUtils();
         String codigo = jTextArea1.getText();
-        String inJava = central.transformeToJava(codigo);
-        String caminho = this.arquivo.substring(0, arquivo.indexOf("."));
-        this.arquivoJava = caminho + ".java";
-        String SalvaArquivoEmJava = fu.SalvaArquivoEmJava(caminho, inJava);
-        cp.compila(SalvaArquivoEmJava);
+        if (codigo.isEmpty()) {
+            System.out.println("comando invalido");
+        } else {
+            String inJava = central.transformeToJava(codigo);
+            String caminho = this.arquivo.substring(0, arquivo.indexOf("."));
+            this.arquivoJava = caminho + ".java";
+            String SalvaArquivoEmJava = fu.SalvaArquivoEmJava(caminho, inJava);
+            cp.compila(SalvaArquivoEmJava);
+        }
     }
 
     private void executa() throws IOException, InterruptedException {
-        cp.run(this.arquivoJava);
+        if (jTextArea1.getText().isEmpty()) {
+            System.out.println("comando invalido");
+        } else {
+            cp.run(this.arquivoJava);
+        }
     }
 
     private void testAndRun() throws IOException, InterruptedException {

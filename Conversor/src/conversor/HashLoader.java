@@ -6,7 +6,6 @@
 package conversor;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -60,17 +59,10 @@ public class HashLoader {
         FileUtils fu = new FileUtils();
         String conteudoDaHash = fu.abrirArquivoHash("linguagem.txt");
         linguagem.clear();
-//        if (linguagem.isEmpty()) {
-//            System.out.println("sim");
-//        } else {
-//            System.out.println("não");
-//        }
         String[] splitLinhas = conteudoDaHash.split(";");
         String[] traducao;
-//        System.out.println(splitLinhas.length);
         for (int i = 0; i < splitLinhas.length - 1; i++) {
             traducao = splitLinhas[i].split("~");
-//            System.out.println(traducao.length + " " + traducao[0]);
             linguagem.put(traducao[0], traducao[1]);
         }
         return linguagem;

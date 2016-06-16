@@ -1,0 +1,13 @@
+programa Teste;
+variaveis:
+	decimal a;
+	decimal b;
+	decimal c;
+fimvar;
+inicio
+	a =3;
+	b=2;
+	c=0.25;
+	c = (a*b)/c;
+	mostra("Valor de C é: "+c);
+fim.
