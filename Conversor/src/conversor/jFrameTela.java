@@ -7,6 +7,7 @@ package conversor;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,7 +25,7 @@ public class jFrameTela extends javax.swing.JFrame {
     Compilador cp = new Compilador();
     String arquivo = "";
     String arquivoJava = "";
-
+    
     public jFrameTela() {
         initComponents();
     }
@@ -164,18 +165,16 @@ public class jFrameTela extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2)
-                        .addGap(15, 15, 15))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,9 +186,9 @@ public class jFrameTela extends javax.swing.JFrame {
                     .addComponent(jButton3))
                 .addGap(19, 19, 19)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(35, 35, 35)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
@@ -336,7 +335,7 @@ public class jFrameTela extends javax.swing.JFrame {
         this.arquivo = null;
         this.arquivoJava = null;
     }
-
+    
     private void salvarArquivo() throws IOException {
         FileUtils fu = new FileUtils();
         int retornoValor = jFileChooser1.showDialog(this, "Salvar");
@@ -349,11 +348,11 @@ public class jFrameTela extends javax.swing.JFrame {
             fu.SalvaArquivo(caminho, conteudo);
         }
     }
-
+    
     private void salvarComo() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     private void verificaCodigo() throws IOException, InterruptedException {
         Centralizador central = new Centralizador();
         FileUtils fu = new FileUtils();
@@ -368,7 +367,7 @@ public class jFrameTela extends javax.swing.JFrame {
             cp.compila(SalvaArquivoEmJava);
         }
     }
-
+    
     private void executa() throws IOException, InterruptedException {
         if (jTextArea1.getText().isEmpty()) {
             System.out.println("comando invalido");
@@ -376,12 +375,20 @@ public class jFrameTela extends javax.swing.JFrame {
             cp.run(this.arquivoJava);
         }
     }
-
+    
     private void testAndRun() throws IOException, InterruptedException {
         verificaCodigo();
         cp.run(arquivoJava);
+        Centralizador central = new Centralizador();
+        ArrayList<String> saida = cp.getSaida();
+        String corpo = central.getCorpo();
+        jTextArea2.setText(null);
+        jTextArea2.setText(corpo);
+        for (String string : saida) {
+            jTextArea2.append(string);
+        }
     }
-
+    
     private void abrirArquivo() throws IOException {
         int retornoValor = jFileChooser1.showDialog(this, "Abrir");
         jFileChooser1.setDialogTitle("Escolha seu arquivo");

@@ -36,6 +36,8 @@ public class HashLoader {
         linguagem.put("inicio", "{;");
         linguagem.put("fim", "};");
         linguagem.put("fim.", "};");
+        linguagem.put("enquanto","while;");
+        linguagem.put("para","for;");
 
         String info = "";
         for (Map.Entry<String, String> entry : linguagem.entrySet()) {

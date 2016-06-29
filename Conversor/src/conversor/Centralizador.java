@@ -15,6 +15,8 @@ import java.util.HashMap;
  */
 public class Centralizador {
 
+    public String corpo;
+
     public String transformeToJava(String conteudo) throws IOException {
         ArrayList<String> arrayLinhas = new ArrayList<String>();
         ArrayList<String> arrayVariaveis = new ArrayList<String>();
@@ -22,7 +24,7 @@ public class Centralizador {
         HashMap<String, String> hashLoaded = hl.loadHash();
         conteudo = conteudo.trim();
         String[] vetor = conteudo.split("\n");
-        String corpo = "";
+        corpo = "";
         String tab = "    ";
         String psvm = "public static void main(String[] args){ \n";
         for (String vetor1 : vetor) {
@@ -46,7 +48,10 @@ public class Centralizador {
         for (int i = fim; i < arrayLinhas.size(); i++) {
             corpo += "\t" + arrayLinhas.get(i) + "\n";
         }
-        corpo = corpo.replaceAll("fimvar.", " ");
+        corpo = corpo.replaceAll("fimvar;", " ");
+        corpo = corpo.replaceAll("inicio", "{");
+        corpo = corpo.replaceAll("fim;", "}");
+        corpo = corpo.replaceAll("enquanto", hashLoaded.get("enquanto"));
         corpo = corpo.replaceAll("mostra", hashLoaded.get("mostra"));
         corpo = corpo.replaceAll("fim.", hashLoaded.get("fim."));
         corpo = corpo.replaceAll("inicio", " ");
@@ -54,6 +59,10 @@ public class Centralizador {
         System.out.println(corpo);
         //substitui mostra
         return corpo;
+    }
+
+    public String getCorpo() {
+        return this.corpo;
     }
 
 }
