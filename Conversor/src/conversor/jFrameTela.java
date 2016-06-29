@@ -344,7 +344,8 @@ public class jFrameTela extends javax.swing.JFrame {
             System.out.println(jFileChooser1.getSelectedFile());
             String caminho = jFileChooser1.getSelectedFile().toString();
             String conteudo = jTextArea1.getText();
-            this.arquivo = caminho;
+            this.arquivo = caminho+".dod";
+            System.out.println("This.arquivo: "+this.arquivo+".dod");
             fu.SalvaArquivo(caminho, conteudo);
         }
     }
@@ -382,7 +383,6 @@ public class jFrameTela extends javax.swing.JFrame {
         Centralizador central = new Centralizador();
         ArrayList<String> saida = cp.getSaida();
         String corpo = central.getCorpo();
-        jTextArea2.setText(null);
         jTextArea2.setText(corpo);
         for (String string : saida) {
             jTextArea2.append(string);

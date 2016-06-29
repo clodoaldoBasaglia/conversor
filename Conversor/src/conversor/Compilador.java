@@ -32,9 +32,8 @@ public class Compilador {
         String nomeClasse = arquivo.substring(arquivo.lastIndexOf("/") + 1, arquivo.lastIndexOf("."));
         String caminhoArquivo = arquivo.substring(0, arquivo.lastIndexOf("/") + 1);
         criaManifest(nomeClasse, caminhoArquivo);
-        String comandoCriaJar = "jar cfm " + caminhoArquivo+nomeClasse + ".jar " + 
-                caminhoArquivo+"Manifest.txt " + caminhoArquivo+ "*.class";
-        System.out.println(comandoCriaJar);
+        String comandoCriaJar = "jar cfm " + caminhoArquivo + nomeClasse + ".jar "
+                + caminhoArquivo + "Manifest.txt " + caminhoArquivo + nomeClasse + ".class";
         Process processo = Runtime.getRuntime().exec(comandoCriaJar);
         BufferedReader readerJar
                 = new BufferedReader(new InputStreamReader(processo.getInputStream()));
@@ -45,17 +44,15 @@ public class Compilador {
         }
         processo.destroy();
         String comandoRodaJar = "java -jar " + caminhoArquivo + nomeClasse + ".jar";
-        System.out.println(comandoRodaJar);
-        Process ls = Runtime.getRuntime().exec("ls " + caminhoArquivo);
-        BufferedReader r = new BufferedReader(new InputStreamReader(ls.getInputStream()));
-        String out = "";
-        while ((out = r.readLine()) != null) {
-            saida.add(out + "\n");
-        }
+//        Process ls = Runtime.getRuntime().exec("ls " + caminhoArquivo);
+//        BufferedReader r = new BufferedReader(new InputStreamReader(ls.getInputStream()));
+//        String out = "";
+//        while ((out = r.readLine()) != null) {
+//            saida.add(out + "\n");
+//        }
         Process processoRoda = Runtime.getRuntime().exec(comandoRodaJar);
-        System.out.println("oi");
         BufferedReader reader
-                = new BufferedReader(new InputStreamReader(processoRoda.getErrorStream()));
+                = new BufferedReader(new InputStreamReader(processoRoda.getInputStream()));
         String line = "";
         while ((line = reader.readLine()) != null) {
             System.out.println(line + "\n");
@@ -71,6 +68,7 @@ public class Compilador {
     void compila(String arquivo) throws IOException, InterruptedException {
         File arq = new File(arquivo);
         if (arq.isFile()) {
+            saida.add(new FileUtils().abrirArquivoHash(arquivo));
             String comando = "javac " + arq;
             Process processo = Runtime.getRuntime().exec(comando);
             BufferedReader reader
@@ -78,14 +76,12 @@ public class Compilador {
 
             String line = "";
             saida.add("compilando...");
-            System.out.println("compilando...");
             while ((line = reader.readLine()) != null) {
                 System.out.print(line + "\n");
-                saida.add(line + "\n");
+                saida.add("> " + line + "\n");
             }
             processo.waitFor();
             saida.add("ok");
-            System.out.println("ok");
         } else {
             System.out.println("Selecione um arquivo.");
         }
@@ -95,10 +91,10 @@ public class Compilador {
     private void criaManifest(String nomeClasse, String caminhoArquivo) {
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(caminhoArquivo + "Manifest.txt"), "utf-8"))) {
-            writer.write("Main-class: " + nomeClasse + "\n");
+            writer.write("Class-Path: " + caminhoArquivo
+                    + "\nMain-class: " + nomeClasse + "\n");
         } catch (IOException ex) {
             System.out.println("Erro ao criar o Manifest");
         }
     }
 }
-
